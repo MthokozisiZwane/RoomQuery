@@ -1,0 +1,10 @@
+{% extends 'core/base.html' %}
+{% block title %}Property Details{% endblock %}
+{% block content %}
+<h1>{{ object.address }}</h1>
+<p>Type: {{ object.property_type }}</p>
+<p>Bedrooms: {{ object.bedrooms }}</p>
+<p>Bathrooms: {{ object.bathrooms }}</p>
+<p>Price: R{{ object.rent_price }}</p>
+<p>Description: {{ object.description }}</p>
+{% endblock %}
