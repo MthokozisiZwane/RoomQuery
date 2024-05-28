@@ -34,7 +34,7 @@ class User(AbstractBaseUser):
     def __str__(self):
         return self.email
     
-    def has_perm(self, perm, obj=None)
+    def has_perm(self, perm, obj=None):
         return self.is_staff
     
     def has_module_perms(self, app_label):
@@ -42,6 +42,8 @@ class User(AbstractBaseUser):
 
 
 # The property model
+# username - my email
+# passw - Zwane747
 
 class Property(models.Model):
     landlord = models.ForeignKey(User, on_delete=models.CASCADE)
