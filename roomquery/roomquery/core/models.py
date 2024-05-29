@@ -8,7 +8,7 @@ class UserManager(BaseUserManager):
         if not email:
             raise ValueError('Users must have an email address')
         user = self.model(email=email, user_type=user_type)
-        user.set_pasword(password)
+        user.set_password(password)
         user.save(using=self._db)
         return user
     
@@ -56,5 +56,6 @@ class Property(models.Model):
 
     def __str__(self):
         return f"{self.address} - {self.property_type}"
+
 
     
