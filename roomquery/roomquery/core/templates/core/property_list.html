@@ -1,12 +1,23 @@
-{% extends 'core/base.html' %}
-{% block title %}Property Listings{% endblock %}
+{% extends "base.html" %}
+
+{% block title %}Properties | RoomQuery{% endblock %}
+
 {% block content %}
-<h1>Property Listings</h1>
-<ul>
-    {% for property in object_list %}
-    <li><a href="{% url 'property_detail' property.pk %}">{{ property.address }}</a></li>
-    {% endfor %}
-</ul>
+    <h2>Properties</h2>
+    <form method="get">
+        {{ form.as_p }}
+        <button type="submit">Search</button>
+    </form>
+    <ul>
+        {% for property in properties %}
+            <li>
+                <h3><a href="{% url 'property_detail' property.pk %}">{{ property.address }}</a></h3>
+                <p>{{ property.description }}</p>
+                <p>Type: {{ property.property_type }}</p>
+                <p>Bedrooms: {{ property.bedrooms }}</p>
+                <p>Bathrooms: {{ property.bathrooms }}</p>
+                <p>Rent Price: R{{ property.rent_price }}</p>
+            </li>
+        {% endfor %}
+    </ul>
 {% endblock %}
-
-

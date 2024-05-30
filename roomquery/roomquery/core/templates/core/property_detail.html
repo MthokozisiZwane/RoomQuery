@@ -1,10 +1,13 @@
 {% extends 'core/base.html' %}
-{% block title %}Property Details{% endblock %}
+{% block title %}{{ property.address }} | RoomQuery{% endblock %}
+
 {% block content %}
-<h1>{{ object.address }}</h1>
-<p>Type: {{ object.property_type }}</p>
-<p>Bedrooms: {{ object.bedrooms }}</p>
-<p>Bathrooms: {{ object.bathrooms }}</p>
-<p>Price: R{{ object.rent_price }}</p>
-<p>Description: {{ object.description }}</p>
+    <h2>{{ property.address }}</h2>
+    <p>Type: {{ property.property_type }}</p>
+    <p>Bedrooms: {{ property.bedrooms }}</p>
+    <p>Bathrooms: {{ property.bathrooms }}</p>
+    <p>Rent Price: R{{ property.rent_price }}</p>
+    <p>Description: {{ property.description }}</p>
+    <p>Landlord: {{ property.landlord.email }}</p>
+    <a href="{% url 'property_list' %}">Back to Properties</a>
 {% endblock %}
