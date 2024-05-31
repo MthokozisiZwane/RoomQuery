@@ -9,5 +9,8 @@
     <p>Rent Price: R{{ property.rent_price }}</p>
     <p>Description: {{ property.description }}</p>
     <p>Landlord: {{ property.landlord.email }}</p>
+    {% if property.image %}
+    <img src="{{ property.image.url }}" alt="Property Image" class="property-image">
+    {% endif %}
     <a href="{% url 'property_list' %}">Back to Properties</a>
 {% endblock %}

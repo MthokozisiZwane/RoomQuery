@@ -1,12 +1,31 @@
 from django.shortcuts import render, redirect
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from . models import Property
 from django.contrib.auth import login,  logout, authenticate
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from .forms import CustomUserCreationForm, PropertySearchForm
+from .forms import CustomUserCreationForm, PropertySearchForm, PropertyForm
 from django.db.models import Q
+from django.contrib.auth.decorators import login_required
+from .forms import UserUpdateForm
+from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+
+
 
 # Create your views here.
+
+
+@login_required
+def profile(request):
+    if request.method == 'POST':
+        form = UserUpdateForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect('profile')
+    else:
+        form = UserUpdateForm(instance=request.user)
+    return render(request, 'profile.html', {'form': form})
+
 
 def index(request):
     return render(request, 'core/index.html')
@@ -15,7 +34,15 @@ def login_view(request):
     return render(request, 'core/login.html')
 
 def register(request):
-    return render(request, 'core/register.html')
+    if request.method == 'POST':
+        form = CustomUserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('property_list')
+    else:
+        form = CustomUserCreationForm()
+    return render(request, 'register.html', {'form': form})
 
 class PropertyListView(ListView):
     model = Property
@@ -88,3 +115,32 @@ def logout_view(request):
         logout(request)
         return redirect('logged_out')
     return render(request, 'logged_out.html')
+
+class PropertyCreateView(LoginRequiredMixin, CreateView):
+    model = Property
+    form_class = PropertyForm
+    template_name = 'property_form.html'
+    success_url = reverse_lazy('property_list')
+
+    def form_valid(self, form):
+        form.instance.landlord = self.request.user
+        return super().form_valid(form)
+
+class PropertyUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Property
+    form_class = PropertyForm
+    template_name = 'property_form.html'
+    success_url = reverse_lazy('property_list')
+
+    def test_func(self):
+        property = self.get_object()
+        return self.request.user == property.landlord
+
+class PropertyDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Property
+    template_name = 'property_confirm_delete.html'
+    success_url = reverse_lazy('property_list')
+
+    def test_func(self):
+        property = self.get_object()
+        return self.request.user == property.landlord

@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block title %}Add/Edit Property | RoomQuery{% endblock %}
+
+{% block content %}
+    <h2>{% if object %}Edit{% else %}Add{% endif %} Property</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">{% if object %}Update{% else %}Create{% endif %} Property</button>
+    </form>
+{% endblock %}
