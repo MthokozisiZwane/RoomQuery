@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
-from .models import User, Property
+from .models import User, Property, Booking
 
 
 class CustomUserCreationForm(UserCreationForm):
@@ -32,4 +32,14 @@ class PropertyForm(forms.ModelForm):
         fields = ['address', 'property_type', 'bedrooms', 'bathrooms', 'rent_price', 'description', 'image']
         widgets = {
             'description': forms.Textarea(attrs={'rows': 4}),
+        }
+
+#adding the booking form
+class BookingForm(forms.ModelForm):
+    class Meta:
+        model = Booking
+        fields = ['start_date', 'end_date']
+        widgets = {
+            'start_date': forms.DateInput(attrs={'type': 'date'}),
+            'end_date': forms.DateInput(attrs={'type': 'date'}),
         }

@@ -1,22 +1,26 @@
-{% extends "base.html" %}
+{% extends "core/base.html" %}
 
 {% block title %}Properties | RoomQuery{% endblock %}
 
 {% block content %}
-    <h2>Properties</h2>
-    <form method="get">
+    <h1>Properties</h1>
+    <form method="get" action="{% url 'property_list' %}">
         {{ form.as_p }}
         <button type="submit">Search</button>
     </form>
     <ul>
         {% for property in properties %}
             <li>
-                <h3><a href="{% url 'property_detail' property.pk %}">{{ property.address }}</a></h3>
+                <h3><a href="{% url 'property_detail' property.pk %}">{{ property.address }} - {{ property.property_type }}</a></h3>
                 <p>{{ property.description }}</p>
                 <p>Type: {{ property.property_type }}</p>
                 <p>Bedrooms: {{ property.bedrooms }}</p>
                 <p>Bathrooms: {{ property.bathrooms }}</p>
                 <p>Rent Price: R{{ property.rent_price }}</p>
+                <a href="{% url 'book_property' property.pk %}">Book Now</a>
+                {% if user.user_type == 'landlord' and property.landlord == user %}
+                <a href="{% url 'landlord_bookings' %}">Manage Bookings</a>
+        {% endif %}
             </li>
         {% endfor %}
     </ul>

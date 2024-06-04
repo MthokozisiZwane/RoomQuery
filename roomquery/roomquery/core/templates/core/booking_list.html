@@ -1,0 +1,15 @@
+{% extends 'core/base.html' %}
+{% block title %}My Bookings{% endblock %}
+{% block content %}
+<h1>My Bookings</h1>
+<ul>
+    {% for booking in bookings %}
+    <li>
+        Property: {{ booking.property.address }}<br>
+        Start Date: {{ booking.start_date }}<br>
+        End Date: {{ booking.end_date }}<br>
+        Status: {{ booking.status }}<br>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}

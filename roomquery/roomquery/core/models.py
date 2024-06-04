@@ -64,5 +64,18 @@ class Property(models.Model):
     def __str__(self):
         return f"{self.address} - {self.property_type}"
 
+# Adding the ability for tenants to make bookings
 
-    
+class Booking(models.Model):
+    tenant = models.ForeignKey(User, on_delete=models.CASCADE)
+    property = models.ForeignKey(Property, on_delete=models.CASCADE)
+    start_date = models.DateField()
+    end_date = models.DateField()
+    booking_date = models.DateTimeField(auto_now_add=True)
+    status = models.CharField(max_length=20, choices=[('pending', 'Pending'), ('confirmed', 'Confirmed'), ('cancelled', 'Cancelled')], default='pending')
+    landlord_response = models.CharField(max_length=20, choices=[('pending', 'Pending'), ('accepted', 'Accepted'), ('rejected', 'Rejected')], default='pending')
+
+
+    def __str__(self):
+        return f"Booking by {self.tenant.email} for {self.property.address} from {self.start_date} to {self.end_date}"
+        
