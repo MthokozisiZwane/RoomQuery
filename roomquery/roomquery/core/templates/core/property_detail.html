@@ -2,15 +2,19 @@
 {% block title %}{{ property.address }} | RoomQuery{% endblock %}
 
 {% block content %}
-    <h2>{{ property.address }}</h2>
-    <p>Type: {{ property.property_type }}</p>
-    <p>Bedrooms: {{ property.bedrooms }}</p>
-    <p>Bathrooms: {{ property.bathrooms }}</p>
-    <p>Rent Price: R{{ property.rent_price }}</p>
-    <p>Description: {{ property.description }}</p>
-    <p>Landlord: {{ property.landlord.email }}</p>
-    {% if property.image %}
-    <img src="{{ property.image.url }}" alt="Property Image" class="property-image">
-    {% endif %}
-    <a href="{% url 'property_list' %}">Back to Properties</a>
+    <div class="card">
+        {% if property.image %}
+            <img src="{{ property.image.url }}" class="card-img-top" alt="Property Image">
+        {% endif %}
+        <div class="card-body">
+            <h2 class="card-title">{{ property.address }}</h2>
+            <p class="card-text">Type: {{ property.property_type }}</p>
+            <p class="card-text">Bedrooms: {{ property.bedrooms }}</p>
+            <p class="card-text">Bathrooms: {{ property.bathrooms }}</p>
+            <p class="card-text">Rent Price: R{{ property.rent_price }}</p>
+            <p class="card-text">Description: {{ property.description }}</p>
+            <p class="card-text">Landlord: {{ property.landlord.email }}</p>
+            <a href="{% url 'property_list' %}" class="btn btn-primary">Back to Properties</a>
+        </div>
+    </div>
 {% endblock %}

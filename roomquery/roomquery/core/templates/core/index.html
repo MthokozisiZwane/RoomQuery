@@ -1,45 +1,45 @@
 {% extends 'core/base.html' %}
 {% block title %}Home{% endblock %}
 {% block content %}
-<h1>Welcome To RoomQuery</h1>
-
-{% if user.is_authenticated %}
-    <p>Hello, {{ user.email }}!</p>
-    {% if user.user_type == "landlord" %}
-        <h2>Your Properties</h2>
-        <ul>
-            {% for property in user.property_set.all %}
-                <li>
-                    <a href="{% url 'property_detail' property.pk %}">{{ property.address }} - {{ property.property_type }}</a>
-                    (<a href="{% url 'property_update' property.pk %}">Edit</a> | <a href="{% url 'property_delete' property.pk %}">Delete</a>)
-                </li>
-            {% empty %}
-                <li>You have no properties listed. <a href="{% url 'property_create' %}">Add a new property</a>.</li>
-            {% endfor %}
-        </ul>
-        <h2><a href="{% url 'landlord_bookings' %}">Manage Bookings</a></h2>
-    {% elif user.user_type == "tenant" %}
-        <h2>Available Properties</h2>
-        <form method="get" action="{% url 'property_list' %}">
-            {{ form.as_p }}
-            <button type="submit">Search</button>
-        </form>
-        <ul>
-            {% for property in properties %}
-                <li>
-                    <a href="{% url 'property_detail' property.pk %}">{{ property.address }} - {{ property.property_type }}</a>
-                    {% if user.user_type == 'tenant' %}
-                        <a href="{% url 'book_property' property.pk %}">Book Now</a>
-                    {% endif %}
-                </li>
-            {% empty %}
-                <li>No properties available.</li>
-            {% endfor %}
-        </ul>
-        <h2><a href="{% url 'tenant_bookings' %}">My Bookings</a></h2>
+<div class="jumbotron">
+    <h1 class="display-4">Welcome To RoomQuery</h1>
+    {% if user.is_authenticated %}
+        <p class="lead">Hello, {{ user.email }}!</p>
+        {% if user.user_type == "landlord" %}
+            <h2>Your Properties</h2>
+            <ul class="list-group">
+                {% for property in user.property_set.all %}
+                    <li class="list-group-item">
+                        <a href="{% url 'property_detail' property.pk %}">{{ property.address }} - {{ property.property_type }}</a>
+                        (<a href="{% url 'property_update' property.pk %}">Edit</a> | <a href="{% url 'property_delete' property.pk %}">Delete</a>)
+                    </li>
+                {% empty %}
+                    <li class="list-group-item">You have no properties listed. <a href="{% url 'property_create' %}">Add a new property</a>.</li>
+                {% endfor %}
+            </ul>
+            <h2><a href="{% url 'landlord_bookings' %}">Manage Bookings</a></h2>
+        {% elif user.user_type == "tenant" %}
+            <h2>Available Properties</h2>
+            <form method="get" action="{% url 'property_list' %}" class="mb-4">
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-primary">Search</button>
+            </form>
+            <ul class="list-group">
+                {% for property in properties %}
+                    <li class="list-group-item">
+                        <a href="{% url 'property_detail' property.pk %}">{{ property.address }} - {{ property.property_type }}</a>
+                        {% if user.user_type == 'tenant' %}
+                            <a href="{% url 'book_property' property.pk %}" class="btn btn-success btn-sm ml-2">Book Now</a>
+                        {% endif %}
+                    </li>
+                {% empty %}
+                    <li class="list-group-item">No properties available.</li>
+                {% endfor %}
+            </ul>
+            <h2><a href="{% url 'tenant_bookings' %}">My Bookings</a></h2>
+        {% endif %}
+    {% else %}
+        <p class="lead">Please <a href="{% url 'login' %}">login</a> or <a href="{% url 'signup' %}">sign up</a> to manage or view properties.</p>
     {% endif %}
-{% else %}
-    <p>Please <a href="{% url 'login' %}">login</a> or <a href="{% url 'signup' %}">sign up</a> to manage or view properties.</p>
-{% endif %}
-
+</div>
 {% endblock %}

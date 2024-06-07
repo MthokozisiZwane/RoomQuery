@@ -1,17 +1,18 @@
-<!-- core/templates/core/tenant_bookings.html -->
 {% extends 'core/base.html' %}
 {% block title %}My Bookings{% endblock %}
 {% block content %}
-<h1>My Bookings</h1>
-<ul>
-    {% for booking in bookings %}
-        <li>
-            <strong>{{ booking.property.address }}</strong> - {{ booking.property.property_type }}
-            <p>Status: {{ booking.get_status_display }}</p>
-            <p>Date Booked: {{ booking.booking_date }}</p>
-        </li>
-    {% empty %}
-        <li>You have no bookings.</li>
-    {% endfor %}
-</ul>
+    <div class="mt-4">
+        <h1>My Bookings</h1>
+        <ul class="list-group">
+            {% for booking in bookings %}
+                <li class="list-group-item">
+                    <strong>{{ booking.property.address }}</strong> - {{ booking.property.property_type }}
+                    <p>Status: {{ booking.get_status_display }}</p>
+                    <p>Date Booked: {{ booking.booking_date }}</p>
+                </li>
+            {% empty %}
+                <li class="list-group-item">You have no bookings.</li>
+            {% endfor %}
+        </ul>
+    </div>
 {% endblock %}

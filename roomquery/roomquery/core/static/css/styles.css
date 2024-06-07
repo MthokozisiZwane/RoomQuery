@@ -70,3 +70,11 @@ ul li {
     max-width: 100%;
     height: auto;
 }
+
+/* static/css/styles.css */
+p {
+    font-size: 1rem;
+    color: #251aa3; /* Dark gray color */
+    line-height: 1.5; /* Better readability */
+    margin-bottom: 1rem; /* Space between paragraphs */
+}

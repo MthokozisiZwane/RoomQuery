@@ -1,15 +1,17 @@
 {% extends 'core/base.html' %}
 {% block title %}My Bookings{% endblock %}
 {% block content %}
-<h1>My Bookings</h1>
-<ul>
-    {% for booking in bookings %}
-    <li>
-        Property: {{ booking.property.address }}<br>
-        Start Date: {{ booking.start_date }}<br>
-        End Date: {{ booking.end_date }}<br>
-        Status: {{ booking.status }}<br>
-    </li>
-    {% endfor %}
-</ul>
+    <div class="mt-4">
+        <h1>My Bookings</h1>
+        <ul class="list-group">
+            {% for booking in bookings %}
+                <li class="list-group-item">
+                    <strong>Property: {{ booking.property.address }}</strong><br>
+                    Start Date: {{ booking.start_date }}<br>
+                    End Date: {{ booking.end_date }}<br>
+                    Status: {{ booking.status }}<br>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
 {% endblock %}

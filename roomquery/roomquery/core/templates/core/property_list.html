@@ -4,24 +4,24 @@
 
 {% block content %}
     <h1>Properties</h1>
-    <form method="get" action="{% url 'property_list' %}">
+    <form method="get" action="{% url 'property_list' %}" class="mb-4">
         {{ form.as_p }}
-        <button type="submit">Search</button>
+        <button type="submit" class="btn btn-primary">Search</button>
     </form>
-    <ul>
+    <div class="list-group">
         {% for property in properties %}
-            <li>
+            <div class="list-group-item">
                 <h3><a href="{% url 'property_detail' property.pk %}">{{ property.address }} - {{ property.property_type }}</a></h3>
                 <p>{{ property.description }}</p>
                 <p>Type: {{ property.property_type }}</p>
                 <p>Bedrooms: {{ property.bedrooms }}</p>
                 <p>Bathrooms: {{ property.bathrooms }}</p>
                 <p>Rent Price: R{{ property.rent_price }}</p>
-                <a href="{% url 'book_property' property.pk %}">Book Now</a>
+                <a href="{% url 'book_property' property.pk %}" class="btn btn-success">Book Now</a>
                 {% if user.user_type == 'landlord' and property.landlord == user %}
-                <a href="{% url 'landlord_bookings' %}">Manage Bookings</a>
-        {% endif %}
-            </li>
+                    <a href="{% url 'landlord_bookings' %}" class="btn btn-secondary">Manage Bookings</a>
+                {% endif %}
+            </div>
         {% endfor %}
-    </ul>
+    </div>
 {% endblock %}

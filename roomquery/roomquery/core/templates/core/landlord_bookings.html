@@ -1,20 +1,21 @@
 {% extends 'core/base.html' %}
 {% block title %}Manage Bookings{% endblock %}
 {% block content %}
-<h1>Manage Bookings</h1>
-<ul>
-    {% for booking in bookings %}
-    <li>
-        <p>Property: {{ booking.property.address }}</p>
-        <p>Tenant: {{ booking.tenant.email }}</p>
-        <p>Start Date: {{ booking.start_date }}</p>
-        <p>End Date: {{ booking.end_date }}</p>
-        <p>Status: {{ booking.status }}</p>
-        <p>Landlord Response: {{ booking.landlord_response }}</p>
-        {% if booking.landlord_response == 'pending' %}
-        <a href="{% url 'respond_booking' booking.id 'accept' %}">Accept</a> | <a href="{% url 'respond_booking' booking.id 'reject' %}">Reject</a>
-        {% endif %}
-    </li>
-    {% endfor %}
-</ul>
+    <h1>Manage Bookings</h1>
+    <ul class="list-group">
+        {% for booking in bookings %}
+            <li class="list-group-item">
+                <p>Property: {{ booking.property.address }}</p>
+                <p>Tenant: {{ booking.tenant.email }}</p>
+                <p>Start Date: {{ booking.start_date }}</p>
+                <p>End Date: {{ booking.end_date }}</p>
+                <p>Status: {{ booking.status }}</p>
+                <p>Landlord Response: {{ booking.landlord_response }}</p>
+                {% if booking.landlord_response == 'pending' %}
+                    <a href="{% url 'respond_booking' booking.id 'accept' %}" class="btn btn-success btn-sm">Accept</a>
+                    <a href="{% url 'respond_booking' booking.id 'reject' %}" class="btn btn-danger btn-sm">Reject</a>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
 {% endblock %}
